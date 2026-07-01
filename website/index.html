@@ -181,6 +181,12 @@
         font-size: 0.875rem;
         color: var(--primary);
         margin-bottom: 1.5rem;
+        text-decoration: none;
+      }
+
+      .badge:hover {
+        border-color: var(--primary);
+        background: rgba(255, 107, 53, 0.15);
       }
 
       h1 {
@@ -416,7 +422,7 @@
     <!-- Hero Section -->
     <section class="hero">
       <div class="hero-content">
-        <span class="badge">✨ v1.4.0 - Smart Autocomplete & Console Enhancements</span>
+        <a class="badge" id="release-badge" href="https://github.com/Flowdesktech/firestudio/releases">✨ …</a>
         <h1>The Ultimate Firebase GUI Client</h1>
         <p class="hero-subtitle">
           A powerful, free, and open-source desktop application for managing Firebase - Firestore, Storage, and
@@ -599,8 +605,8 @@
       </div>
     </footer>
 
-    <!-- Structured Data for SEO -->
-    <script type="application/ld+json">
+    <!-- Structured Data for SEO (softwareVersion updated from GitHub latest release when available) -->
+    <script type="application/ld+json" id="release-ld-json">
       {
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
@@ -614,12 +620,12 @@
         },
         "description": "A powerful, free, and open-source desktop application for managing Firebase - Firestore, Storage, and Authentication.",
         "downloadUrl": "https://github.com/Flowdesktech/firestudio/releases",
-        "softwareVersion": "1.4.0",
         "author": {
           "@type": "Organization",
           "name": "Flowdesk"
         }
       }
     </script>
+    <script src="js/latest-release.js" defer></script>
   </body>
 </html>
