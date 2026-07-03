@@ -251,11 +251,11 @@ pnpm run build:all
 
 **Output files are saved to the `release/` directory:**
 
-| Platform | Files Generated                                                                             |
-| -------- | ------------------------------------------------------------------------------------------- |
-| Windows  | `Firestudio-1.0.0-Windows-x64.exe` (installer), `Firestudio-1.0.0-Windows-x64-portable.exe` |
-| macOS    | `Firestudio-1.0.0-macOS-x64.dmg`, `Firestudio-1.0.0-macOS-arm64.dmg` (Apple Silicon)        |
-| Linux    | `Firestudio-1.0.0-Linux-x64.AppImage`, `Firestudio-1.0.0-Linux-x64.deb`                     |
+| Platform | Files Generated                                                                                   |
+| -------- | ------------------------------------------------------------------------------------------------- |
+| Windows  | `Firestudio-1.0.0-Windows-Setup-x64.exe` (installer), `Firestudio-1.0.0-Windows-x64-portable.exe` |
+| macOS    | `Firestudio-1.0.0-macOS-x64.dmg`, `Firestudio-1.0.0-macOS-arm64.dmg` (Apple Silicon)              |
+| Linux    | `Firestudio-1.0.0-Linux-x64.AppImage`, `Firestudio-1.0.0-Linux-x64.deb`                           |
 
 ### Publishing to GitHub Releases
 

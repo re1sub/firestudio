@@ -32,21 +32,39 @@ jobs:
 
       - name: Build Windows (unsigned)
         if: vars.ENABLE_CODE_SIGNING != 'true'
-        run: pnpm run build:win
+        run: pnpm run build:win:ci
 
       - name: Build Windows (signed)
         if: vars.ENABLE_CODE_SIGNING == 'true'
-        run: pnpm run build:win
+        run: pnpm run build:win:ci
         env:
           CSC_LINK: ${{ secrets.WINDOWS_CERTIFICATE }}
           CSC_KEY_PASSWORD: ${{ secrets.WINDOWS_CERTIFICATE_PASSWORD }}
 
-      # Upload full `release/` so GitHub has NSIS + latest.yml + blockmap for electron-updater
+      - name: Verify Windows NSIS installer
+        shell: pwsh
+        run: |
+          $setup = Get-ChildItem -Path release -Filter '*Setup*.exe' -ErrorAction SilentlyContinue
+          if (-not $setup) {
+            Write-Error 'NSIS Setup .exe was not produced. Contents of release/:'
+            Get-ChildItem -Path release -Recurse | ForEach-Object { $_.FullName }
+            exit 1
+          }
+          if (-not (Test-Path release/latest.yml)) {
+            Write-Error 'latest.yml was not produced (required for electron-updater).'
+            exit 1
+          }
+          Write-Host "Windows installer: $($setup.Name)"
+
+      # Upload installers + updater metadata only (not win-unpacked/)
       - name: Upload Windows artifacts
         uses: actions/upload-artifact@v4
         with:
           name: windows-builds
-          path: release
+          path: |
+            release/*Setup*.exe
+            release/*.yml
+            release/*.blockmap
           retention-days: 5
 
   build-mac:
@@ -91,7 +109,11 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: mac-builds
-          path: release
+          path: |
+            release/*.dmg
+            release/*.zip
+            release/*.yml
+            release/*.blockmap
           retention-days: 5
 
   build-linux:
@@ -124,7 +146,11 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: linux-builds
-          path: release
+          path: |
+            release/*.deb
+            release/*.AppImage
+            release/*.tar.gz
+            release/*.yml
           retention-days: 5
 
   create-release:

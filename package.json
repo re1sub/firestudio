@@ -1,6 +1,6 @@
 {
   "name": "firestudio",
-  "version": "1.9.0",
+  "version": "1.9.1",
   "description": "A powerful open-source GUI client for Firebase Firestore",
   "main": "electron/main.js",
   "scripts": {
@@ -15,6 +15,7 @@
     "format:check": "prettier --check .",
     "build:electron": "pnpm run build && electron-builder --publish never",
     "build:win": "pnpm run build && electron-builder --win --publish never",
+    "build:win:ci": "pnpm run build && electron-builder --win nsis --publish never",
     "build:mac": "pnpm run build && electron-builder --mac --publish never",
     "build:linux": "pnpm run build && electron-builder --linux --publish never",
     "build:all": "pnpm run build && electron-builder --win --mac --linux",
@@ -151,17 +152,18 @@
           "target": "nsis",
           "arch": [
             "x64"
-          ]
+          ],
+          "artifactName": "${productName}-${version}-Windows-Setup-${arch}.${ext}"
         },
         {
           "target": "portable",
           "arch": [
             "x64"
-          ]
+          ],
+          "artifactName": "${productName}-${version}-Windows-${arch}-portable.${ext}"
         }
       ],
       "icon": "assets/icon.ico",
-      "artifactName": "${productName}-${version}-Windows-${arch}.${ext}",
       "signAndEditExecutable": false
     },
     "nsis": {
